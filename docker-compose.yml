@@ -1,0 +1,60 @@
+version: "3"
+services:
+  spider1:
+    build: 
+      context: ./ms
+      dockerfile: Dockerfile
+    image: spider:latest
+    pull_policy: never
+    container_name: worker1
+    restart: always
+    command: sh run.sh
+    environment:
+      TZ: "Asia/Shanghai"
+    depends_on:
+      - chrome
+    volumes:
+      - ./worker1/:/worker/
+
+  spider2:
+    build: 
+      context: ./ms
+      dockerfile: Dockerfile
+    image: spider:latest
+    pull_policy: never
+    container_name: worker2
+    restart: always
+    command: sh run.sh
+    environment:
+      TZ: "Asia/Shanghai"
+    depends_on:
+      - chrome
+    volumes:
+      - ./worker2/:/worker/
+
+  spider3:
+    build: 
+      context: ./ms
+      dockerfile: Dockerfile
+    image: spider:latest
+    pull_policy: never
+    container_name: worker3
+    restart: always
+    command: sh run.sh
+    environment:
+      TZ: "Asia/Shanghai"
+    depends_on:
+      - chrome
+    volumes:
+      - ./worker3/:/worker/
+
+  chrome:
+    image: selenium/standalone-chrome:4.8.3-20230404
+    pull_policy: never
+    container_name: chrome
+    restart: always
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - 4444:4444
+
